@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>八进制转换器_八进制与二进制、十进制在线互转 - 进制转换器</title>
+<meta name="description" content="八进制在线转换工具：八进制转二进制、八进制转十进制一键完成，实时出结果不丢精度。附八进制换算方法、Linux 文件权限 755/777 实例解析与 0-20 对照表。">
+<link rel="canonical" href="https://www.jinzhizhuanhuan.com/octal.html">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "八进制数 17 等于十进制多少？",
+      "acceptedAnswer": { "@type": "Answer", "text": "按位权展开：17 = 1×8 + 7×1 = 15。八进制以 8 为基数，从右往左位权依次是 1、8、64、512。" }
+    },
+    {
+      "@type": "Question",
+      "name": "Linux 权限 755 是什么意思？",
+      "acceptedAnswer": { "@type": "Answer", "text": "755 是三个八进制位，每位展开成 3 个二进制位：7=111 表示所有者可读可写可执行，5=101 表示所属组和其他用户可读可执行、不可写。" }
+    },
+    {
+      "@type": "Question",
+      "name": "八进制现在还有哪些用途？",
+      "acceptedAnswer": { "@type": "Answer", "text": "典型场景包括 Linux/Unix 文件权限（chmod 755）、C 语言中以 0 开头的八进制字面量（如 0755），以及部分历史系统中按 3 位一组缩短二进制书写的场合。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.jinzhizhuanhuan.com/" },
+    { "@type": "ListItem", "position": 2, "name": "八进制转换", "item": "https://www.jinzhizhuanhuan.com/octal.html" }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="page">
+
+  <header class="nav-bar">
+    <a class="nav-brand" href="index.html"><svg class="brand-logo" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="12" fill="#0a0231" stroke="#41f7d3" stroke-width="2.5"/><text x="6" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#41f7d3">01</text><path d="M23 25h8m-4-4l4 4-4 4" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="33" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#fcf11a">F</text></svg>进制转换器<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="站内导航">
+      <a class="nav-link" href="index.html">首页</a>
+      <a class="nav-link" href="binary.html">二进制转换</a>
+      <a class="nav-link active" href="octal.html" aria-current="page">八进制转换</a>
+      <a class="nav-link" href="decimal.html">十进制转换</a>
+      <a class="nav-link" href="hex.html">十六进制转换</a>
+      <a class="nav-link" href="guide.html">转换百科</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="index.html">首页</a><span class="sep">/</span>八进制转换
+    </nav>
+
+    <section class="hero">
+      <span class="eyebrow">OCT · 满八进一</span>
+      <h1>八进制在线转换器，<em>与二进制、十进制</em>实时互转</h1>
+      <p class="hero-desc">输入八进制数立刻得到二进制、十进制、十六进制结果；反向换算同样支持。附带 Linux 文件权限实例讲解，运维和开发都实用。</p>
+    </section>
+
+    <section class="tool-section" aria-label="八进制转换工具">
+      <div class="tool-card" id="octTool" data-convert-tool>
+        <h2>八进制 ↔ 其他进制换算器</h2>
+        <p class="tool-tip">默认预选「八进制 → 十进制」，可自由切换任意进制组合；输入自动忽略 0o 前缀。</p>
+        <div class="convert-row">
+          <div class="convert-col">
+            <label for="fromBase">源进制</label>
+            <select id="fromBase" name="from-base">
+              <option value="2">二进制（0-1）</option>
+              <option value="8" selected>八进制（0-7）</option>
+              <option value="10">十进制（0-9）</option>
+              <option value="16">十六进制（0-9 / A-F）</option>
+            </select>
+          </div>
+          <div class="convert-col">
+            <button type="button" class="swap-btn" title="交换源进制与目标进制" aria-label="交换进制方向">⇄</button>
+          </div>
+          <div class="convert-col">
+            <label for="toBase">目标进制</label>
+            <select id="toBase" name="to-base">
+              <option value="2">二进制（0-1）</option>
+              <option value="8">八进制（0-7）</option>
+              <option value="10" selected>十进制（0-9）</option>
+              <option value="16">十六进制（0-9 / A-F）</option>
+            </select>
+          </div>
+        </div>
+        <div class="convert-row" style="grid-template-columns: 1fr;">
+          <div class="convert-col">
+            <label for="octInput">输入数值</label>
+            <input id="octInput" name="source" placeholder="例如：755" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+        <div class="result-box">
+          <output name="result" for="octInput" aria-live="polite">转换结果会显示在这里</output>
+          <button type="button" class="copy-btn">复制结果</button>
+        </div>
+        <p class="tool-msg" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">OCTAL 101</span>
+        <h2>八进制是什么：满八进一的三比特视角</h2>
+      </div>
+      <div class="prose-card">
+        <h3>位权展开与换算方法</h3>
+        <p>八进制（Octal）以 8 为基数，只使用 0 到 7 八个符号，「满八进一」。从右往左各位的位权是 1、8、64、512……把每位数字乘以对应位权再求和，就得到十进制值。例如八进制 175：</p>
+        <div class="demo-steps">
+          <p>175 = 1×64 + 7×8 + 5×1</p>
+          <p class="final">= 64 + 56 + 5 = 125（十进制）</p>
+        </div>
+        <p>十进制转八进制用「除 8 取余、余数倒排」，与转二进制的思路完全一致，只是除数换成 8。例如 125 ÷ 8 = 15 余 5，15 ÷ 8 = 1 余 7，1 ÷ 8 = 0 余 1，倒排得 175。</p>
+        <h3>与二进制的关系：3 位一组</h3>
+        <p>八进制的价值来自它与二进制的天然对应：2³ = 8，每 3 个二进制位恰好压缩成 1 个八进制字符。从右往左每 3 位分组、高位补零，逐组替换：</p>
+        <div class="demo-steps">
+          <p>二进制 1111101 → 分组 001 | 111 | 101</p>
+          <p class="final">= 1 | 7 | 5 → 八进制 175</p>
+        </div>
+        <p>反向同理：每个八进制位展开成 3 位二进制即可。在十六进制普及之前，八进制曾是 PDP 系列小型机时代的主流缩写方式——因为那些机器的字长是 12 位、24 位、36 位，都能被 3 整除；后来 8 位、16 位、32 位计算机成为主流（能被 4 整除），十六进制才逐渐取代了它的位置。</p>
+        <h3>实战例子：读懂 Linux 文件权限 755</h3>
+        <p>Linux 与 macOS 中用 <code>chmod 755 file</code> 设置权限时，755 就是三个八进制位，每个八进制位展开成 3 个二进制位，分别对应读（r=4）、写（w=2）、执行（x=1）三种能力：</p>
+        <div class="demo-steps">
+          <p>7 = 111 → rwx（所有者：读、写、执行）</p>
+          <p>5 = 101 → r-x（所属组：读、执行）</p>
+          <p>5 = 101 → r-x（其他用户：读、执行）</p>
+        </div>
+        <p>同理，777 表示所有人拥有全部权限（不建议对敏感文件使用），644 表示所有者可读写、其他人只读，这是网站部署里最常见的两组权限值。看到权限数字时心算一遍八进制转二进制，每个比特的含义一目了然。</p>
+        <h3>编程语言中的八进制字面量</h3>
+        <p>C、C++、Java 中以 0 开头的数字是八进制（0755 即十进制 493）；Python 3 和 JavaScript 的严格写法是 0o755。一个经典陷阱是：把十进制 10 误写成 010，程序会把它当作八进制的 8 处理——排查这类bug 时，先用转换器确认两种写法各自的十进制值。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">CHEAT SHEET</span>
+        <h2>八进制 0 - 20 对照表</h2>
+      </div>
+      <div class="prose-card">
+        <div class="table-wrap">
+          <table class="base-table">
+            <thead>
+              <tr><th>八进制</th><th>二进制</th><th>十进制</th><th>十六进制</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>0</td><td>000</td><td class="dec">0</td><td>0</td></tr>
+              <tr><td>1</td><td>001</td><td class="dec">1</td><td>1</td></tr>
+              <tr><td>2</td><td>010</td><td class="dec">2</td><td>2</td></tr>
+              <tr><td>3</td><td>011</td><td class="dec">3</td><td>3</td></tr>
+              <tr><td>4</td><td>100</td><td class="dec">4</td><td>4</td></tr>
+              <tr><td>5</td><td>101</td><td class="dec">5</td><td>5</td></tr>
+              <tr><td>6</td><td>110</td><td class="dec">6</td><td>6</td></tr>
+              <tr><td>7</td><td>111</td><td class="dec">7</td><td>7</td></tr>
+              <tr><td>10</td><td>001000</td><td class="dec">8</td><td>8</td></tr>
+              <tr><td>11</td><td>001001</td><td class="dec">9</td><td>9</td></tr>
+              <tr><td>12</td><td>001010</td><td class="dec">10</td><td>A</td></tr>
+              <tr><td>13</td><td>001011</td><td class="dec">11</td><td>B</td></tr>
+              <tr><td>14</td><td>001100</td><td class="dec">12</td><td>C</td></tr>
+              <tr><td>15</td><td>001101</td><td class="dec">13</td><td>D</td></tr>
+              <tr><td>16</td><td>001110</td><td class="dec">14</td><td>E</td></tr>
+              <tr><td>17</td><td>001111</td><td class="dec">15</td><td>F</td></tr>
+              <tr><td>20</td><td>010000</td><td class="dec">16</td><td>10</td></tr>
+              <tr><td>21</td><td>010001</td><td class="dec">17</td><td>11</td></tr>
+              <tr><td>22</td><td>010010</td><td class="dec">18</td><td>12</td></tr>
+              <tr><td>23</td><td>010011</td><td class="dec">19</td><td>13</td></tr>
+              <tr><td>24</td><td>010100</td><td class="dec">20</td><td>14</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-head">
+        <span class="kicker">FAQ</span>
+        <h2>八进制转换常见问题</h2>
+      </div>
+      <details class="faq-item">
+        <summary>八进制数 17 等于十进制多少？</summary>
+        <p class="faq-a">17 = 1×8 + 7 = 15。注意八进制里不出现数字 8 和 9，「满八进一」意味着 10 就已经是十进制的 8 了。</p>
+      </details>
+      <details class="faq-item">
+        <summary>八进制为什么不常用 8 和 9？</summary>
+        <p class="faq-a">八进制的基数是 8，只需要 0-7 共八个不同符号。数字 8 和 9 不在其符号表内，出现即非法——比如 0o18 不是合法八进制数，转换器会直接提示错误。</p>
+      </details>
+      <details class="faq-item">
+        <summary>Linux 权限 755 是什么意思？</summary>
+        <p class="faq-a">755 是三个八进制位，按 rwx（读=4、写=2、执行=1）展开：7 = 4+2+1 即所有者可读写执行，5 = 4+1 即所属组和其他用户可读、可执行但不可写。这是让脚本可以运行、同时避免他人篡改的常用权限。</p>
+      </details>
+      <details class="faq-item">
+        <summary>八进制和十六进制应该学哪个？</summary>
+        <p class="faq-a">以十六进制为主、八进制为辅。现代计算机字长是 8 的倍数，与 4 位一组的十六进制天然契合，内存地址、颜色码、哈希值全是十六进制；八进制主要保留在文件权限（chmod）、少量 C 语言遗留代码和嵌入式场景中，理解「3 位一组」的思想即可。</p>
+      </details>
+    </section>
+
+    <section class="section">
+      <div class="cta-band">
+        <h2>继续换算其他进制</h2>
+        <p>八进制换算完成后，试试与其关系最密切的二进制转换页。</p>
+        <a class="button--primary" href="binary.html">去二进制转换</a>
+        <a class="button--ghost" href="guide.html" style="margin-left:12px;">阅读转换百科</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="nav-brand" href="index.html"><svg class="brand-logo" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="12" fill="#0a0231" stroke="#41f7d3" stroke-width="2.5"/><text x="6" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#41f7d3">01</text><path d="M23 25h8m-4-4l4 4-4 4" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="33" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#fcf11a">F</text></svg>进制转换器<span class="dot">.</span></a>
+          <p>专注进制换算的免费在线工具站：二进制、八进制、十进制、十六进制任意互转，配套原创教程与速查表，帮助程序员与学生高效处理数字进制问题。</p>
+        </div>
+        <div class="footer-col">
+          <h4>转换工具</h4>
+          <a href="binary.html">二进制转换器</a>
+          <a href="octal.html">八进制转换器</a>
+          <a href="decimal.html">十进制转换器</a>
+          <a href="hex.html">十六进制转换器</a>
+        </div>
+        <div class="footer-col">
+          <h4>学习资料</h4>
+          <a href="guide.html">进制转换百科</a>
+          <a href="index.html#table">进制对照速查表</a>
+          <a href="index.html#faq">常见问题解答</a>
+        </div>
+        <div class="footer-col">
+          <h4>快捷入口</h4>
+          <a href="index.html#syncConverter">综合转换器</a>
+          <a href="decimal.html">十进制转二进制</a>
+          <a href="hex.html">十六进制转十进制</a>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 进制转换器 · 本站所有换算均在浏览器本地完成，不收集任何输入数据</div>
+    </div>
+  </footer>
+
+</div>
+<script src="js/converter.js"></script>
+<script src="js/baidu-analytics.js"></script>
+</body>
+</html>

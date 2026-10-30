@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>进制转换百科_换算方法、位权公式与任意进制详解 - 进制转换器</title>
+<meta name="description" content="进制转换系统教程：位权展开公式、除基取余与乘基取整口诀、二/八/十/十六进制互转捷径、负数补码与小数转换详解，附 0-32 完整对照表与任意进制在线换算器。">
+<link rel="canonical" href="https://www.jinzhizhuanhuan.com/guide.html">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "进制转换的通用公式是什么？",
+      "acceptedAnswer": { "@type": "Answer", "text": "任意进制转十进制用位权展开：每一位数字乘以基数的对应次方后求和，位权从右往左从 0 次方开始；十进制转任意进制用除基取余、余数倒排。" }
+    },
+    {
+      "@type": "Question",
+      "name": "计算机中负数为什么要用补码表示？",
+      "acceptedAnswer": { "@type": "Answer", "text": "补码能让加法器同时处理加法和减法，无需额外的减法电路；且 0 只有唯一表示。负数的补码等于对应正数按位取反后加 1。" }
+    },
+    {
+      "@type": "Question",
+      "name": "36 进制是什么样子的？",
+      "acceptedAnswer": { "@type": "Answer", "text": "36 进制使用 0-9 加 A-Z 共 36 个符号，常用于短链接、邀请码等需要紧凑表示大数的场景。本站转换器支持 2 到 36 进制内任意互转。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.jinzhizhuanhuan.com/" },
+    { "@type": "ListItem", "position": 2, "name": "转换百科", "item": "https://www.jinzhizhuanhuan.com/guide.html" }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="page">
+
+  <header class="nav-bar">
+    <a class="nav-brand" href="index.html"><svg class="brand-logo" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="12" fill="#0a0231" stroke="#41f7d3" stroke-width="2.5"/><text x="6" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#41f7d3">01</text><path d="M23 25h8m-4-4l4 4-4 4" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="33" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#fcf11a">F</text></svg>进制转换器<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="站内导航">
+      <a class="nav-link" href="index.html">首页</a>
+      <a class="nav-link" href="binary.html">二进制转换</a>
+      <a class="nav-link" href="octal.html">八进制转换</a>
+      <a class="nav-link" href="decimal.html">十进制转换</a>
+      <a class="nav-link" href="hex.html">十六进制转换</a>
+      <a class="nav-link active" href="guide.html" aria-current="page">转换百科</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="index.html">首页</a><span class="sep">/</span>转换百科
+    </nav>
+
+    <section class="hero">
+      <span class="eyebrow">GUIDE · 系统教程</span>
+      <h1>进制转换百科：<em>一套公式讲清所有进制</em>怎么换</h1>
+      <p class="hero-desc">不管基数是几，换算方法只有两套：位权展开和除基取余。这一页把它们彻底讲透，并补齐课本里常常一笔带过的负数、小数与任意进制话题。</p>
+    </section>
+
+    <section class="tool-section" aria-label="任意进制换算器">
+      <div class="tool-card" id="guideTool" data-convert-tool>
+        <h2>任意进制换算器（2 - 36 进制）</h2>
+        <p class="tool-tip">不止四种常用进制：下拉框收录了 2 到 36 之间的常用基数，36 进制使用 0-9 与 A-Z。</p>
+        <div class="convert-row">
+          <div class="convert-col">
+            <label for="fromBase">源进制</label>
+            <select id="fromBase" name="from-base">
+              <option value="2" selected>2 进制（二进制）</option>
+              <option value="3">3 进制</option>
+              <option value="4">4 进制</option>
+              <option value="5">5 进制</option>
+              <option value="6">6 进制</option>
+              <option value="7">7 进制</option>
+              <option value="8">8 进制（八进制）</option>
+              <option value="9">9 进制</option>
+              <option value="10">10 进制（十进制）</option>
+              <option value="11">11 进制</option>
+              <option value="12">12 进制</option>
+              <option value="16">16 进制（十六进制）</option>
+              <option value="20">20 进制</option>
+              <option value="26">26 进制</option>
+              <option value="32">32 进制</option>
+              <option value="36">36 进制（0-9 / A-Z）</option>
+            </select>
+          </div>
+          <div class="convert-col">
+            <button type="button" class="swap-btn" title="交换源进制与目标进制" aria-label="交换进制方向">⇄</button>
+          </div>
+          <div class="convert-col">
+            <label for="toBase">目标进制</label>
+            <select id="toBase" name="to-base">
+              <option value="2">2 进制（二进制）</option>
+              <option value="3">3 进制</option>
+              <option value="4">4 进制</option>
+              <option value="5">5 进制</option>
+              <option value="6">6 进制</option>
+              <option value="7">7 进制</option>
+              <option value="8">8 进制（八进制）</option>
+              <option value="9">9 进制</option>
+              <option value="10" selected>10 进制（十进制）</option>
+              <option value="11">11 进制</option>
+              <option value="12">12 进制</option>
+              <option value="16">16 进制（十六进制）</option>
+              <option value="20">20 进制</option>
+              <option value="26">26 进制</option>
+              <option value="32">32 进制</option>
+              <option value="36">36 进制（0-9 / A-Z）</option>
+            </select>
+          </div>
+        </div>
+        <div class="convert-row" style="grid-template-columns: 1fr;">
+          <div class="convert-col">
+            <label for="guideInput">输入数值</label>
+            <input id="guideInput" name="source" placeholder="例如：ZZ 或 1295" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+        <div class="result-box">
+          <output name="result" for="guideInput" aria-live="polite">转换结果会显示在这里</output>
+          <button type="button" class="copy-btn">复制结果</button>
+        </div>
+        <p class="tool-msg" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">THE FORMULA</span>
+        <h2>核心公式：位权展开</h2>
+      </div>
+      <div class="prose-card">
+        <p>所有进制都遵循同一个数学结构。设基数为 b，一个 n 位数从右往左第 i 位（i 从 0 开始）的数字是 dᵢ，则它对应的十进制值为：</p>
+        <div class="demo-steps">
+          <p class="final">值 = dₙ₋₁×bⁿ⁻¹ + … + d₂×b² + d₁×b¹ + d₀×b⁰</p>
+        </div>
+        <p>举个跨进制的例子验证一下。三十六进制的 ZZ（Z 代表 35）：Z×36 + Z = 35×36 + 35 = 1295。再比如十二进制的 1B（B 代表 11）：1×12 + 11 = 23。公式不需要记忆变形，任何基数都直接套用，这也是它比背「二进制怎么转、八进制怎么转」更划算的原因——一张公式卡走遍所有进制。</p>
+        <p>反过来，十进制转基数为 b 的进制用「除 b 取余」：不断除以 b、记下余数，直到商为 0，再把余数倒序排列。两者一个负责「读出」，一个负责「写出」，合起来就是进制换算的全部。想随时验算，用本页顶部的任意进制换算器即可，它支持 2 到 36 的全部基数。</p>
+        <h3>为什么是「满 b 进一」</h3>
+        <p>基数的含义是「这一位集满多少个一就向高位进位」。十进制数到 9 之后再加 1，个位没有新符号可用，只能清零并给十位加 1；二进制数到 1 之后再加 1，同理清零进位变成 10。基数越小，符号越少但位数越长；基数越大，表达越紧凑但需要更多符号——十六进制为此引入了字母，三十六进制干脆用尽 26 个字母。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">SHORTCUTS</span>
+        <h2>四条捷径：常用进制之间的快速通道</h2>
+      </div>
+      <div class="prose-card">
+        <h3>捷径一：二进制 ↔ 十六进制，4 位一组</h3>
+        <p>2⁴ = 16，二进制每 4 位对应 1 位十六进制。二转十六从右往左分组、补零、查表；十六转二进制则每个字符直接展开成 4 位。这是所有捷径里使用频率最高的一条，调试内存、看十六进制转储文件都靠它。详细示例见<a href="binary.html">二进制转换页</a>。</p>
+        <h3>捷径二：二进制 ↔ 八进制，3 位一组</h3>
+        <p>2³ = 8，道理相同，只是每组变成 3 位。例如二进制 1111101 分组 001 / 111 / 101，即八进制 175。Linux 文件权限就是这条捷径的日常应用，见<a href="octal.html">八进制转换页</a>的 755 实例。</p>
+        <h3>捷径三：八进制 ↔ 十六进制，借道二进制</h3>
+        <p>八进制和十六进制之间没有直接的分组关系（3 和 4 没有公倍数意义上的对应），最快路径是先展开成二进制再重新分组：八进制 175 → 001111101 → 0111 1101 → 0x7D。整个转换只是查表和分组，不需要乘除。</p>
+        <h3>捷径四：任何进制 → 十进制 → 任何进制</h3>
+        <p>遇到不熟悉的基数（比如五进制、十二进制），最稳妥的方法永远是「两段式」：先用位权展开折算成十进制，再用除基取余写出目标进制。位数不多时手算完全可行，位数多或数值大时交给转换器，逐位运算不会出错。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">ADVANCED</span>
+        <h2>进阶话题：负数、小数与任意进制</h2>
+      </div>
+      <div class="prose-card">
+        <h3>负数与补码</h3>
+        <p>计算机里没有单独的减法电路，负数统一用补码（Two's Complement）表示：正数的补码是它本身；负数的补码 = 对应正数按位取反后整体加 1。以 8 位为例，+45 是 00101101，取反得 11010010，加 1 得 11010011，这就是 -45。补码的妙处在于加法器可以直接做减法：45 + (-45) 按位相加恰好得到 1 00000000，舍去溢出的最高位后正好是 0。也因为最高位被当作符号位，8 位有符号数的范围是 -128 到 +127，而不是 0 到 255。</p>
+        <p>换算负数时务必先确认位宽：同一个 -45，8 位补码是 11010011，16 位补码则是 1111111111010011，两者完全不同。这是进制转换里最容易踩的坑。</p>
+        <h3>小数转换：乘基取整</h3>
+        <p>整数部分「除基取余」，小数部分方向相反——「乘基取整」：每次把小数部分乘以基数，取走整数部分作为一位，再对剩下的纯小数重复，直到小数部分归零或达到所需精度。例如 0.8125 转二进制：0.8125×2=1.625 取 1，0.625×2=1.25 取 1，0.25×2=0.5 取 0，0.5×2=1.0 取 1，得 0.1101。</p>
+        <p>要特别留意：许多十进制小数在其他进制下是无限循环小数。0.1 的二进制是 0.0001100110011…循环，无法被有限位精确表示，因此浮点数天生带着舍入误差。这也解释了为什么金融类程序宁可把金额存成「分」（整数）也不存小数。</p>
+        <h3>任意进制与生活实例</h3>
+        <p>进制不只活在计算机里：时间计数是六十进制（60 秒进 1 分）、角度也用六十进制的分秒；十二进制藏在「一打」里；短链接服务把自增 ID 转成 62 进制（0-9、a-z、A-Z）来缩短网址；早期的 IP 选项、部分序列号体系用到三十六进制。看懂位权公式后，这些「奇怪进制」都只是符号表不同的普通进位计数制而已。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">FULL TABLE</span>
+        <h2>0 - 32 完整对照表</h2>
+        <p>一张表覆盖二、八、十、十六进制全部常用值，打印或截图放在手边，多数换算场景可以直接查表解决。</p>
+      </div>
+      <div class="prose-card">
+        <div class="table-wrap">
+          <table class="base-table">
+            <thead>
+              <tr><th>十进制</th><th>二进制</th><th>八进制</th><th>十六进制</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="dec">0</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td class="dec">1</td><td>1</td><td>1</td><td>1</td></tr>
+              <tr><td class="dec">2</td><td>10</td><td>2</td><td>2</td></tr>
+              <tr><td class="dec">3</td><td>11</td><td>3</td><td>3</td></tr>
+              <tr><td class="dec">4</td><td>100</td><td>4</td><td>4</td></tr>
+              <tr><td class="dec">5</td><td>101</td><td>5</td><td>5</td></tr>
+              <tr><td class="dec">6</td><td>110</td><td>6</td><td>6</td></tr>
+              <tr><td class="dec">7</td><td>111</td><td>7</td><td>7</td></tr>
+              <tr><td class="dec">8</td><td>1000</td><td>10</td><td>8</td></tr>
+              <tr><td class="dec">9</td><td>1001</td><td>11</td><td>9</td></tr>
+              <tr><td class="dec">10</td><td>1010</td><td>12</td><td>A</td></tr>
+              <tr><td class="dec">11</td><td>1011</td><td>13</td><td>B</td></tr>
+              <tr><td class="dec">12</td><td>1100</td><td>14</td><td>C</td></tr>
+              <tr><td class="dec">13</td><td>1101</td><td>15</td><td>D</td></tr>
+              <tr><td class="dec">14</td><td>1110</td><td>16</td><td>E</td></tr>
+              <tr><td class="dec">15</td><td>1111</td><td>17</td><td>F</td></tr>
+              <tr><td class="dec">16</td><td>10000</td><td>20</td><td>10</td></tr>
+              <tr><td class="dec">17</td><td>10001</td><td>21</td><td>11</td></tr>
+              <tr><td class="dec">18</td><td>10010</td><td>22</td><td>12</td></tr>
+              <tr><td class="dec">19</td><td>10011</td><td>23</td><td>13</td></tr>
+              <tr><td class="dec">20</td><td>10100</td><td>24</td><td>14</td></tr>
+              <tr><td class="dec">21</td><td>10101</td><td>25</td><td>15</td></tr>
+              <tr><td class="dec">22</td><td>10110</td><td>26</td><td>16</td></tr>
+              <tr><td class="dec">23</td><td>10111</td><td>27</td><td>17</td></tr>
+              <tr><td class="dec">24</td><td>11000</td><td>30</td><td>18</td></tr>
+              <tr><td class="dec">25</td><td>11001</td><td>31</td><td>19</td></tr>
+              <tr><td class="dec">26</td><td>11010</td><td>32</td><td>1A</td></tr>
+              <tr><td class="dec">27</td><td>11011</td><td>33</td><td>1B</td></tr>
+              <tr><td class="dec">28</td><td>11100</td><td>34</td><td>1C</td></tr>
+              <tr><td class="dec">29</td><td>11101</td><td>35</td><td>1D</td></tr>
+              <tr><td class="dec">30</td><td>11110</td><td>36</td><td>1E</td></tr>
+              <tr><td class="dec">31</td><td>11111</td><td>37</td><td>1F</td></tr>
+              <tr><td class="dec">32</td><td>100000</td><td>40</td><td>20</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-head">
+        <span class="kicker">FAQ</span>
+        <h2>进制学习常见问题</h2>
+      </div>
+      <details class="faq-item">
+        <summary>进制转换的通用公式是什么？</summary>
+        <p class="faq-a">两套互逆的方法：任意进制转十进制用位权展开——每位数字乘以基数的对应次方（从右往左 0 次方起步）后求和；十进制转任意进制用除基取余、余数倒排。二进制与八进制、十六进制之间另有 3 位、4 位分组的捷径。</p>
+      </details>
+      <details class="faq-item">
+        <summary>计算机中负数为什么要用补码表示？</summary>
+        <p class="faq-a">补码让同一套加法器既能做加法也能做减法（减一个数等于加它的补码），省掉了专门的减法电路；同时 0 的表示唯一，不会出现 +0 和 -0 之分。负数补码 = 对应正数按位取反再加 1，最高位是符号位。</p>
+      </details>
+      <details class="faq-item">
+        <summary>36 进制是什么样子的？</summary>
+        <p class="faq-a">36 进制使用 0-9 加 A-Z 共 36 个符号，「满三十六进一」。它能在最少的字符里表达最大的数（两位 36 进制即可覆盖 0-1295），常用于短链接、优惠码、批量序列号等需要紧凑表示大整数的场景。本页顶部换算器支持到 36 进制。</p>
+      </details>
+      <details class="faq-item">
+        <summary>学进制转换有什么高效练习方法？</summary>
+        <p class="faq-a">建议三步走：先把 0-15 对照表背到条件反射；再练「4 位一组」读十六进制和「除 2 取余」写二进制这两个最常用操作；最后用本站各转换页对自己的手算结果做即时校验。每天十分钟，一周左右就能脱离工具心算常见值。</p>
+      </details>
+    </section>
+
+    <section class="section">
+      <div class="cta-band">
+        <h2>学完理论，上手实战</h2>
+        <p>四个进制专属转换页已经为你准备好，边学边练印象最深。</p>
+        <a class="button--primary" href="index.html#syncConverter">打开综合转换器</a>
+        <a class="button--ghost" href="binary.html" style="margin-left:12px;">从二进制开始</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="nav-brand" href="index.html"><svg class="brand-logo" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="12" fill="#0a0231" stroke="#41f7d3" stroke-width="2.5"/><text x="6" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#41f7d3">01</text><path d="M23 25h8m-4-4l4 4-4 4" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="33" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#fcf11a">F</text></svg>进制转换器<span class="dot">.</span></a>
+          <p>专注进制换算的免费在线工具站：二进制、八进制、十进制、十六进制任意互转，配套原创教程与速查表，帮助程序员与学生高效处理数字进制问题。</p>
+        </div>
+        <div class="footer-col">
+          <h4>转换工具</h4>
+          <a href="binary.html">二进制转换器</a>
+          <a href="octal.html">八进制转换器</a>
+          <a href="decimal.html">十进制转换器</a>
+          <a href="hex.html">十六进制转换器</a>
+        </div>
+        <div class="footer-col">
+          <h4>学习资料</h4>
+          <a href="guide.html">进制转换百科</a>
+          <a href="index.html#table">进制对照速查表</a>
+          <a href="index.html#faq">常见问题解答</a>
+        </div>
+        <div class="footer-col">
+          <h4>快捷入口</h4>
+          <a href="index.html#syncConverter">综合转换器</a>
+          <a href="decimal.html">十进制转二进制</a>
+          <a href="hex.html">十六进制转十进制</a>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 进制转换器 · 本站所有换算均在浏览器本地完成，不收集任何输入数据</div>
+    </div>
+  </footer>
+
+</div>
+<script src="js/converter.js"></script>
+<script src="js/baidu-analytics.js"></script>
+</body>
+</html>

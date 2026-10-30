@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>十进制转换器_十进制转二进制、十六进制、八进制 - 进制转换器</title>
+<meta name="description" content="十进制在线转换工具：十进制转二进制、转十六进制、转八进制一键完成，实时出结果且支持超长数字。附除基取余完整演算示例、小数转换方法与常见进制对照表。">
+<link rel="canonical" href="https://www.jinzhizhuanhuan.com/decimal.html">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "十进制 100 转二进制是多少？",
+      "acceptedAnswer": { "@type": "Answer", "text": "100 = 64 + 32 + 4，对应二进制 1100100。也可以用除 2 取余法逐位求出，本页转换器可一键验证。" }
+    },
+    {
+      "@type": "Question",
+      "name": "十进制转十六进制怎么算？",
+      "acceptedAnswer": { "@type": "Answer", "text": "用除 16 取余法：不断除以 16 并记录余数，余数 10 到 15 分别写成 A 到 F，最后把余数倒序排列。例如 255 ÷ 16 = 15 余 15，即 FF。" }
+    },
+    {
+      "@type": "Question",
+      "name": "十进制小数能转成二进制吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "可以，采用乘 2 取整法：每次把小数部分乘以 2 并取出整数位。部分十进制小数在二进制下是无限循环小数，因此转换结果按需截取位数。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.jinzhizhuanhuan.com/" },
+    { "@type": "ListItem", "position": 2, "name": "十进制转换", "item": "https://www.jinzhizhuanhuan.com/decimal.html" }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="page">
+
+  <header class="nav-bar">
+    <a class="nav-brand" href="index.html"><svg class="brand-logo" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="12" fill="#0a0231" stroke="#41f7d3" stroke-width="2.5"/><text x="6" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#41f7d3">01</text><path d="M23 25h8m-4-4l4 4-4 4" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="33" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#fcf11a">F</text></svg>进制转换器<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="站内导航">
+      <a class="nav-link" href="index.html">首页</a>
+      <a class="nav-link" href="binary.html">二进制转换</a>
+      <a class="nav-link" href="octal.html">八进制转换</a>
+      <a class="nav-link active" href="decimal.html" aria-current="page">十进制转换</a>
+      <a class="nav-link" href="hex.html">十六进制转换</a>
+      <a class="nav-link" href="guide.html">转换百科</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="index.html">首页</a><span class="sep">/</span>十进制转换
+    </nav>
+
+    <section class="hero">
+      <span class="eyebrow">DEC · 满十进一</span>
+      <h1>十进制在线转换器，<em>一键换算二进制、十六进制、八进制</em></h1>
+      <p class="hero-desc">输入一个熟悉的十进制数，立刻得到它在计算机世界里的各种写法。支持超长数字逐位运算，考试验算、写代码查数都够用。</p>
+    </section>
+
+    <section class="tool-section" aria-label="十进制转换工具">
+      <div class="tool-card" id="decTool" data-convert-tool>
+        <h2>十进制 ↔ 其他进制换算器</h2>
+        <p class="tool-tip">默认预选「十进制 → 二进制」，下拉框可切换为任意进制组合。</p>
+        <div class="convert-row">
+          <div class="convert-col">
+            <label for="fromBase">源进制</label>
+            <select id="fromBase" name="from-base">
+              <option value="2">二进制（0-1）</option>
+              <option value="8">八进制（0-7）</option>
+              <option value="10" selected>十进制（0-9）</option>
+              <option value="16">十六进制（0-9 / A-F）</option>
+            </select>
+          </div>
+          <div class="convert-col">
+            <button type="button" class="swap-btn" title="交换源进制与目标进制" aria-label="交换进制方向">⇄</button>
+          </div>
+          <div class="convert-col">
+            <label for="toBase">目标进制</label>
+            <select id="toBase" name="to-base">
+              <option value="2" selected>二进制（0-1）</option>
+              <option value="8">八进制（0-7）</option>
+              <option value="10">十进制（0-9）</option>
+              <option value="16">十六进制（0-9 / A-F）</option>
+            </select>
+          </div>
+        </div>
+        <div class="convert-row" style="grid-template-columns: 1fr;">
+          <div class="convert-col">
+            <label for="decInput">输入数值</label>
+            <input id="decInput" name="source" inputmode="numeric" placeholder="例如：2026" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+        <div class="result-box">
+          <output name="result" for="decInput" aria-live="polite">转换结果会显示在这里</output>
+          <button type="button" class="copy-btn">复制结果</button>
+        </div>
+        <p class="tool-msg" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">DECIMAL 101</span>
+        <h2>十进制为什么是人类的「默认进制」</h2>
+      </div>
+      <div class="prose-card">
+        <h3>十个手指决定的计数习惯</h3>
+        <p>十进制（Decimal）以 10 为基数，使用 0 到 9 十个符号，「满十进一」。主流观点认为它与人类有十根手指直接相关：掰手指计数是最原始的记录方式，数完十根就进一位。今天它几乎是所有日常场景——价格、身高、里程——的标准表达，也因此成了其他进制换算时最常用的「中转站」。</p>
+        <p>严格来说，十进制并没有什么数学上的特殊性，只是人类习惯的问题。计算机内部并不直接使用十进制，处理器做加减法时面对的全是二进制电平；我们在屏幕上看到的十进制数，是程序在显示层替我们翻译过的结果。理解「十进制只是众多进制之一」，是学透进位计数制的第一步。</p>
+        <h3>十进制转二进制：除 2 取余，完整演算一遍</h3>
+        <p>这是考试和面试里出现频率最高的一题。以 100 为例：</p>
+        <div class="demo-steps">
+          <p>100 ÷ 2 = 50 …… 余 0</p>
+          <p>50&nbsp;&nbsp;÷ 2 = 25 …… 余 0</p>
+          <p>25&nbsp;&nbsp;÷ 2 = 12 …… 余 1</p>
+          <p>12&nbsp;&nbsp;÷ 2 = 6&nbsp;&nbsp;…… 余 0</p>
+          <p>6&nbsp;&nbsp;&nbsp;÷ 2 = 3&nbsp;&nbsp;…… 余 0</p>
+          <p>3&nbsp;&nbsp;&nbsp;÷ 2 = 1&nbsp;&nbsp;…… 余 1</p>
+          <p>1&nbsp;&nbsp;&nbsp;÷ 2 = 0&nbsp;&nbsp;…… 余 1</p>
+          <p class="final">余数倒排 → 1100100，即 100 的二进制是 1100100</p>
+        </div>
+        <p>验算方法：1100100 = 64 + 32 + 4 = 100，与原数一致。熟练之后也可以用「凑 2 的幂」快速口算：找不超过原数的最大 2 的次方，逐级减去，减到哪一位就在哪一位写 1。</p>
+        <h3>十进制转十六进制：除 16 取余，余数 10-15 写成 A-F</h3>
+        <div class="demo-steps">
+          <p>255 ÷ 16 = 15 …… 余 15（F）</p>
+          <p>15&nbsp;&nbsp;÷ 16 = 0&nbsp;&nbsp;…… 余 15（F）</p>
+          <p class="final">余数倒排 → FF，即 255 的十六进制是 FF</p>
+        </div>
+        <p>这个例子值得记住：255 = 2⁸ - 1，二进制是 8 个 1，十六进制正好两个 F。同理 65535 = FFFF、4294967295 = FFFFFFFF，记住这组对应关系，看内存上限、颜色值时都有用。</p>
+        <h3>十进制小数的转换：乘 2 取整</h3>
+        <p>整数部分走「除基取余」，小数部分则相反，用「乘基取整」：每次把小数部分乘以基数，取出整数部分作为一位，再对剩余小数重复。以 0.375 转二进制为例：0.375×2 = 0.75 取 0；0.75×2 = 1.5 取 1；0.5×2 = 1.0 取 1，小数部分归零，结果为 0.011。但要注意，像 0.1 这样的小数乘 2 永远不会精确归零，在二进制下是无限循环小数——这就是编程语言里浮点数比较要用误差范围而不能直接用等号的根本原因。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">CHEAT SHEET</span>
+        <h2>十进制 0 - 20 对照表</h2>
+      </div>
+      <div class="prose-card">
+        <div class="table-wrap">
+          <table class="base-table">
+            <thead>
+              <tr><th>十进制</th><th>二进制</th><th>八进制</th><th>十六进制</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="dec">0</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td class="dec">1</td><td>1</td><td>1</td><td>1</td></tr>
+              <tr><td class="dec">2</td><td>10</td><td>2</td><td>2</td></tr>
+              <tr><td class="dec">3</td><td>11</td><td>3</td><td>3</td></tr>
+              <tr><td class="dec">4</td><td>100</td><td>4</td><td>4</td></tr>
+              <tr><td class="dec">5</td><td>101</td><td>5</td><td>5</td></tr>
+              <tr><td class="dec">6</td><td>110</td><td>6</td><td>6</td></tr>
+              <tr><td class="dec">7</td><td>111</td><td>7</td><td>7</td></tr>
+              <tr><td class="dec">8</td><td>1000</td><td>10</td><td>8</td></tr>
+              <tr><td class="dec">9</td><td>1001</td><td>11</td><td>9</td></tr>
+              <tr><td class="dec">10</td><td>1010</td><td>12</td><td>A</td></tr>
+              <tr><td class="dec">11</td><td>1011</td><td>13</td><td>B</td></tr>
+              <tr><td class="dec">12</td><td>1100</td><td>14</td><td>C</td></tr>
+              <tr><td class="dec">13</td><td>1101</td><td>15</td><td>D</td></tr>
+              <tr><td class="dec">14</td><td>1110</td><td>16</td><td>E</td></tr>
+              <tr><td class="dec">15</td><td>1111</td><td>17</td><td>F</td></tr>
+              <tr><td class="dec">16</td><td>10000</td><td>20</td><td>10</td></tr>
+              <tr><td class="dec">17</td><td>10001</td><td>21</td><td>11</td></tr>
+              <tr><td class="dec">18</td><td>10010</td><td>22</td><td>12</td></tr>
+              <tr><td class="dec">19</td><td>10011</td><td>23</td><td>13</td></tr>
+              <tr><td class="dec">20</td><td>10100</td><td>24</td><td>14</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-head">
+        <span class="kicker">FAQ</span>
+        <h2>十进制转换常见问题</h2>
+      </div>
+      <details class="faq-item">
+        <summary>十进制 100 转二进制是多少？</summary>
+        <p class="faq-a">100 = 64 + 32 + 4，对应二进制 1100100。用除 2 取余法逐步演算也能得到同样结果，本页顶部转换器输入 100 可一键验证。</p>
+      </details>
+      <details class="faq-item">
+        <summary>十进制转十六进制怎么算？</summary>
+        <p class="faq-a">除 16 取余、余数倒排：余数为 10 到 15 时分别写成 A、B、C、D、E、F。例如 255 → FF、4096 → 1000。数值较大时先转二进制再按 4 位分组，往往比直接除 16 更不容易出错。</p>
+      </details>
+      <details class="faq-item">
+        <summary>为什么 0.1 + 0.2 在编程里不等于 0.3？</summary>
+        <p class="faq-a">因为计算机用二进制存储小数，而十进制的 0.1 在二进制下是无限循环小数（0.000110011…），存储时被截断产生误差。0.1 和 0.2 各自的近似值相加后与 0.3 的近似值并不完全相等，于是出现 0.30000000000000004 这类结果。这是二进制浮点数的固有特性，不是程序写错了。</p>
+      </details>
+      <details class="faq-item">
+        <summary>十进制负数转其他进制怎么处理？</summary>
+        <p class="faq-a">先对绝对值做常规转换，再按目标环境要求的规则处理符号：数学书写时直接加负号（如 -101101）；计算机内部则使用补码表示，例如 8 位下的 -45 是 11010011。不同位宽（8/16/32 位）补码结果不同，转换前先确认位宽。</p>
+      </details>
+    </section>
+
+    <section class="section">
+      <div class="cta-band">
+        <h2>继续换算其他进制</h2>
+        <p>十进制数换算完成后，可以在其他进制页了解它们的更多细节。</p>
+        <a class="button--primary" href="binary.html">去二进制转换</a>
+        <a class="button--ghost" href="hex.html" style="margin-left:12px;">去十六进制转换</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="nav-brand" href="index.html"><svg class="brand-logo" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="12" fill="#0a0231" stroke="#41f7d3" stroke-width="2.5"/><text x="6" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#41f7d3">01</text><path d="M23 25h8m-4-4l4 4-4 4" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="33" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#fcf11a">F</text></svg>进制转换器<span class="dot">.</span></a>
+          <p>专注进制换算的免费在线工具站：二进制、八进制、十进制、十六进制任意互转，配套原创教程与速查表，帮助程序员与学生高效处理数字进制问题。</p>
+        </div>
+        <div class="footer-col">
+          <h4>转换工具</h4>
+          <a href="binary.html">二进制转换器</a>
+          <a href="octal.html">八进制转换器</a>
+          <a href="decimal.html">十进制转换器</a>
+          <a href="hex.html">十六进制转换器</a>
+        </div>
+        <div class="footer-col">
+          <h4>学习资料</h4>
+          <a href="guide.html">进制转换百科</a>
+          <a href="index.html#table">进制对照速查表</a>
+          <a href="index.html#faq">常见问题解答</a>
+        </div>
+        <div class="footer-col">
+          <h4>快捷入口</h4>
+          <a href="index.html#syncConverter">综合转换器</a>
+          <a href="decimal.html">十进制转二进制</a>
+          <a href="hex.html">十六进制转十进制</a>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 进制转换器 · 本站所有换算均在浏览器本地完成，不收集任何输入数据</div>
+    </div>
+  </footer>
+
+</div>
+<script src="js/converter.js"></script>
+<script src="js/baidu-analytics.js"></script>
+</body>
+</html>

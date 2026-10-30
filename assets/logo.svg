@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="进制转换器 Logo">
+  <!-- 深紫圆角徽章底 -->
+  <rect x="2" y="2" width="44" height="44" rx="12" fill="#0a0231" stroke="#41f7d3" stroke-width="2.5"/>
+  <!-- 左：二进制 01 -->
+  <text x="6" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#41f7d3">01</text>
+  <!-- 中：转换箭头 -->
+  <path d="M23 25h8m-4-4l4 4-4 4" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 右：十六进制 F -->
+  <text x="33" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#fcf11a">F</text>
+</svg>

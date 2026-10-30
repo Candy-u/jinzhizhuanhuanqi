@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>进制转换器-二进制、八进制、十进制、十六进制一键互转</title>
+<meta name="description" content="进制转换工具支持二进制、八进制、十进制、十六进制转换器之间任意互转，输入即输出结果，2进制转10进制，16进制转换 ，十进制转十六进制 ，二进制转换十进制等都手拿把掐数字不丢精度，附进制换算方法图解、对照速查表">
+<link rel="canonical" href="https://www.jinzhizhuanhuan.com/">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "在线进制转换工具",
+  "url": "https://www.jinzhizhuanhuan.com/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "All",
+  "description": "支持二进制、八进制、十进制、十六进制之间任意互转的免费在线进制转换工具。",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" }
+}
+</script>
+</head>
+<body>
+<div class="page">
+
+  <header class="nav-bar">
+    <a class="nav-brand" href="index.html"><svg class="brand-logo" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="12" fill="#0a0231" stroke="#41f7d3" stroke-width="2.5"/><text x="6" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#41f7d3">01</text><path d="M23 25h8m-4-4l4 4-4 4" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="33" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#fcf11a">F</text></svg>进制转换器<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="站内导航">
+      <a class="nav-link active" href="index.html" aria-current="page">首页</a>
+      <a class="nav-link" href="binary.html">二进制转换</a>
+      <a class="nav-link" href="octal.html">八进制转换</a>
+      <a class="nav-link" href="decimal.html">十进制转换</a>
+      <a class="nav-link" href="hex.html">十六进制转换</a>
+      <a class="nav-link" href="guide.html">转换百科</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <!-- Hero：H1 + 简介 + 紧跟工具 -->
+    <section class="hero">
+      <span class="eyebrow">免费 · 免注册 · 支持超长数字</span>
+      <h1>在线进制转换工具，<em>二进制、十进制、十六进制</em>输入即换算</h1>
+      <p class="hero-desc">在任意一栏输入数字，其余进制结果实时同步生成。基于大数逐位运算，转换超过 15 位的二进制串也不会丢失精度，程序员、学生与电子爱好者都能直接上手。</p>
+    </section>
+
+    <!-- 转换工具 -->
+    <section class="tool-section" aria-label="进制转换工具">
+      <div class="tool-card" id="syncConverter" data-sync-converter>
+        <h2>进制互转换算器</h2>
+        <p class="tool-tip">支持 2 / 8 / 10 / 16 进制互转；输入框会自动忽略 0x、0b、0o 前缀以及空格、下划线，直接粘贴代码里的写法也没问题。</p>
+        <div class="sync-grid">
+          <div class="sync-field">
+            <label for="in2">二进制<span class="tag">0 和 1</span></label>
+            <input id="in2" data-base="2" inputmode="text" placeholder="例如：1101011" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="sync-field">
+            <label for="in8">八进制<span class="tag">0 - 7</span></label>
+            <input id="in8" data-base="8" inputmode="text" placeholder="例如：153" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="sync-field">
+            <label for="in10">十进制<span class="tag">0 - 9</span></label>
+            <input id="in10" data-base="10" inputmode="numeric" placeholder="例如：107" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="sync-field">
+            <label for="in16">十六进制<span class="tag">0 - 9 / A - F</span></label>
+            <input id="in16" data-base="16" inputmode="text" placeholder="例如：6B" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+        <p class="tool-msg" role="status" aria-live="polite"></p>
+        <div class="quick-examples">
+          试试这些例子：
+          <button type="button" data-example="2" data-value="1101011">1101011（二进制）</button>
+          <button type="button" data-example="10" data-value="2026">2026（十进制）</button>
+          <button type="button" data-example="16" data-value="FF">FF（十六进制）</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 指定进制互转（tab 选择版） -->
+    <section class="tool-section" aria-label="指定进制互转工具">
+      <div class="tool-card" id="homeTool" data-convert-tool>
+        <h2>指定进制互转</h2>
+        <p class="tool-tip">点一下标签即可切换源进制与目标进制，输入数值立即换算；⇄ 按钮可一键对调方向。</p>
+        <div class="convert-row">
+          <div class="convert-col">
+            <label id="fromLabel">源进制</label>
+            <div class="base-tabs" data-for="from" role="tablist" aria-labelledby="fromLabel">
+              <button type="button" data-base="2" role="tab">二进制</button>
+              <button type="button" data-base="8" role="tab">八进制</button>
+              <button type="button" data-base="10" role="tab" class="active" aria-selected="true">十进制</button>
+              <button type="button" data-base="16" role="tab">十六进制</button>
+            </div>
+            <select name="from-base" hidden aria-hidden="true" tabindex="-1">
+              <option value="2">二进制</option>
+              <option value="8">八进制</option>
+              <option value="10" selected>十进制</option>
+              <option value="16">十六进制</option>
+            </select>
+          </div>
+          <div class="convert-col">
+            <button type="button" class="swap-btn" title="对调源进制与目标进制" aria-label="对调进制方向">⇄</button>
+          </div>
+          <div class="convert-col">
+            <label id="toLabel">目标进制</label>
+            <div class="base-tabs" data-for="to" role="tablist" aria-labelledby="toLabel">
+              <button type="button" data-base="2" role="tab" class="active" aria-selected="true">二进制</button>
+              <button type="button" data-base="8" role="tab">八进制</button>
+              <button type="button" data-base="10" role="tab">十进制</button>
+              <button type="button" data-base="16" role="tab">十六进制</button>
+            </div>
+            <select name="to-base" hidden aria-hidden="true" tabindex="-1">
+              <option value="2" selected>二进制</option>
+              <option value="8">八进制</option>
+              <option value="10">十进制</option>
+              <option value="16">十六进制</option>
+            </select>
+          </div>
+        </div>
+        <div class="convert-row" style="grid-template-columns: 1fr;">
+          <div class="convert-col">
+            <label for="homeInput">输入数值</label>
+            <input id="homeInput" name="source" placeholder="例如：2026" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+        <div class="result-box">
+          <output name="result" for="homeInput" aria-live="polite">转换结果会显示在这里</output>
+          <button type="button" class="copy-btn">复制结果</button>
+        </div>
+        <p class="tool-msg" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- 对照速查表 -->
+    <section class="section" id="table">
+      <div class="section-head">
+        <span class="kicker">QUICK TABLE</span>
+        <h2>常用进制对照速查表（0 - 20）</h2>
+        <p>把这张表记熟，看一眼十进制数就能报出二进制和十六进制写法，调试代码、看内存地址都会快很多。</p>
+      </div>
+      <div class="prose-card">
+        <div class="table-wrap">
+          <table class="base-table">
+            <thead>
+              <tr><th>十进制</th><th>二进制</th><th>八进制</th><th>十六进制</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="dec">0</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td class="dec">1</td><td>1</td><td>1</td><td>1</td></tr>
+              <tr><td class="dec">2</td><td>10</td><td>2</td><td>2</td></tr>
+              <tr><td class="dec">3</td><td>11</td><td>3</td><td>3</td></tr>
+              <tr><td class="dec">4</td><td>100</td><td>4</td><td>4</td></tr>
+              <tr><td class="dec">5</td><td>101</td><td>5</td><td>5</td></tr>
+              <tr><td class="dec">6</td><td>110</td><td>6</td><td>6</td></tr>
+              <tr><td class="dec">7</td><td>111</td><td>7</td><td>7</td></tr>
+              <tr><td class="dec">8</td><td>1000</td><td>10</td><td>8</td></tr>
+              <tr><td class="dec">9</td><td>1001</td><td>11</td><td>9</td></tr>
+              <tr><td class="dec">10</td><td>1010</td><td>12</td><td>A</td></tr>
+              <tr><td class="dec">11</td><td>1011</td><td>13</td><td>B</td></tr>
+              <tr><td class="dec">12</td><td>1100</td><td>14</td><td>C</td></tr>
+              <tr><td class="dec">13</td><td>1101</td><td>15</td><td>D</td></tr>
+              <tr><td class="dec">14</td><td>1110</td><td>16</td><td>E</td></tr>
+              <tr><td class="dec">15</td><td>1111</td><td>17</td><td>F</td></tr>
+              <tr><td class="dec">16</td><td>10000</td><td>20</td><td>10</td></tr>
+              <tr><td class="dec">17</td><td>10001</td><td>21</td><td>11</td></tr>
+              <tr><td class="dec">18</td><td>10010</td><td>22</td><td>12</td></tr>
+              <tr><td class="dec">19</td><td>10011</td><td>23</td><td>13</td></tr>
+              <tr><td class="dec">20</td><td>10100</td><td>24</td><td>14</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 长文：什么是进制 -->
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">BASIC KNOWLEDGE</span>
+        <h2>什么是进制？一句话讲透「满几进一」</h2>
+      </div>
+      <div class="prose-card">
+        <h3>进位计数制的本质</h3>
+        <p>进制也叫进位计数制，说的是用多少个不同符号来表示数，以及什么时候向高位进位。我们从小使用的十进制「满十进一」，只用了 0 到 9 这十个符号；而计算机内部通行的二进制「满二进一」，只用 0 和 1 两个符号。符号越少，写同一个数需要的位数就越多，但电路实现却越简单——这正是计算机选择二进制的根本原因。</p>
+        <p>任何一个进制数都可以按「位权展开」换算成十进制。所谓位权，就是每一位所代表的实际大小，等于基数（进制的几）的若干次方。以二进制的 1101 为例，从右往左各位的位权依次是 2 的 0、1、2、3 次方，于是 1101 = 1×8 + 1×4 + 0×2 + 1×1 = 十进制的 13。反过来，把十进制数不断除以基数、记录余数，再把余数倒着读出来，就得到了目标进制的写法。这两种方法互为逆运算，构成了所有进制换算的骨架。</p>
+        <p>除了最常见的二、八、十、十六进制，工程领域还会碰到三十二进制、六十四进制（如 Base64 编码）甚至任意进制。本站的转换器按字符串逐位计算，理论上支持到三十六进制以内任意基数的互转，超长数字也不会像普通计算器那样溢出。</p>
+      </div>
+    </section>
+
+    <!-- 长文：手工换算方法 -->
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">HOW TO</span>
+        <h2>手工换算怎么做？两套口诀走天下</h2>
+      </div>
+      <div class="prose-card">
+        <h3>方法一：除基取余，余数倒排（十进制 → 其他进制）</h3>
+        <p>把十进制数不断除以目标进制的基数，每一步记下余数，直到商为 0，然后把余数<b>从下往上</b>抄出来。以 45 转二进制为例：</p>
+        <div class="demo-steps">
+          <p>45 ÷ 2 = 22 …… 余 1</p>
+          <p>22 ÷ 2 = 11 …… 余 0</p>
+          <p>11 ÷ 2 = 5&nbsp;&nbsp;…… 余 1</p>
+          <p>5&nbsp;&nbsp;÷ 2 = 2&nbsp;&nbsp;…… 余 1</p>
+          <p>2&nbsp;&nbsp;÷ 2 = 1&nbsp;&nbsp;…… 余 0</p>
+          <p>1&nbsp;&nbsp;÷ 2 = 0&nbsp;&nbsp;…… 余 1</p>
+          <p class="final">倒着读余数 → 101101，即 45 的二进制是 101101</p>
+        </div>
+        <h3>方法二：乘基取整 / 位权展开（其他进制 → 十进制）</h3>
+        <p>把每一位数字乘上对应的位权再求和。十六进制的 2F 换成十进制：F 代表 15，2F = 2×16 + 15 = 47。小数部分则用「乘基取整」：不断乘以基数、取整数部分，例如 0.625 转二进制：0.625×2=1.2 取 1，0.25×2=0.5 取 0，0.5×2=1.0 取 1，得到 0.101。</p>
+        <h3>方法三：二、八、十六进制之间的「分组捷径」</h3>
+        <p>因为 8 = 2³、16 = 2⁴，二进制与八进制、十六进制之间不需要绕道十进制：<b>二转八每 3 位一组，二转十六每 4 位一组</b>，从右往左分组、高位不足补零，再把每组直接查表替换即可。例如二进制 1101011 按 4 位分组是 0110 / 1011，查表得 6 和 B，即十六进制 6B——这个技巧在阅读十六进制内存地址时特别省时间。需要更系统的讲解可以阅读我们的<a href="guide.html">进制转换百科</a>。</p>
+      </div>
+    </section>
+
+    <!-- 应用场景 -->
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">USE CASES</span>
+        <h2>哪些场景离不开进制转换</h2>
+      </div>
+      <div class="grid-3">
+        <div class="feature-card">
+          <h3>编程与调试</h3>
+          <p>看内存地址、读反汇编、设位标志位时满屏都是 0x 开头的十六进制；写底层驱动时又要直接面对二进制寄存器位。转换器能帮你把看不懂的数立刻翻译成熟悉的十进制。</p>
+        </div>
+        <div class="feature-card">
+          <h3>考试与课程作业</h3>
+          <p>计算机组成原理、数字电路、C 语言等课程的必考题型。用工具验算「除基取余」的手工答案，比翻课本对答案更快，也更容易发现步骤里抄错的余数。</p>
+        </div>
+        <div class="feature-card">
+          <h3>网络、色彩与硬件</h3>
+          <p>IPv4 地址本质是 32 位二进制，子网掩码计算依赖二进制；网页色值 #FF5500 是十六进制；硬件手册里的寄存器配置表几乎全是二进制位描述——都离不开随时换算。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 内页入口 -->
+    <section class="section" id="tools">
+      <div class="section-head">
+        <span class="kicker">ALL TOOLS</span>
+        <h2>按进制进入专属转换页</h2>
+        <p>每个进制都有独立页面，预置好常用转换方向，并配有该进制的详细说明、换算示例与专属速查表。</p>
+      </div>
+      <div class="grid-2">
+        <a class="tool-card-link" href="binary.html">
+          <span class="badge b2">BIN · 2</span>
+          <h3>二进制转换器</h3>
+          <p>二进制与十进制、八进制、十六进制互转，附 0-15 速查表与「4 位一组」读数技巧，适合看寄存器和位运算场景。</p>
+          <span class="go">进入二进制转换 →</span>
+        </a>
+        <a class="tool-card-link" href="octal.html">
+          <span class="badge b8">OCT · 8</span>
+          <h3>八进制转换器</h3>
+          <p>八进制与二进制、十进制互转，讲清 Linux 文件权限 755、777 的由来，附完整八进制对照表。</p>
+          <span class="go">进入八进制转换 →</span>
+        </a>
+        <a class="tool-card-link" href="decimal.html">
+          <span class="badge b10">DEC · 10</span>
+          <h3>十进制转换器</h3>
+          <p>十进制转二进制、十六进制、八进制一键完成，演示「除基取余」完整步骤，作业验算神器。</p>
+          <span class="go">进入十进制转换 →</span>
+        </a>
+        <a class="tool-card-link" href="hex.html">
+          <span class="badge b16">HEX · 16</span>
+          <h3>十六进制转换器</h3>
+          <p>十六进制与二进制、十进制互转，解释 0x 前缀、颜色码 #RRGGBB 与内存地址的常见写法。</p>
+          <span class="go">进入十六进制转换 →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 站点特色 -->
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">WHY US</span>
+        <h2>这个转换器有什么不一样</h2>
+      </div>
+      <div class="grid-3">
+        <div class="feature-card">
+          <h3>大数不丢精度</h3>
+          <p>不用 JavaScript 原生数值直接换算，而是按位做大数运算。64 位地址、超长二进制串都能完整转换，这是多数在线工具做不到的。</p>
+        </div>
+        <div class="feature-card">
+          <h3>输入即出结果</h3>
+          <p>不需要点「转换」按钮，边输入边同步；自动容忍 0x、0b、0o 前缀和下划线分隔符，从代码里直接复制粘贴也能识别。</p>
+        </div>
+        <div class="feature-card">
+          <h3>纯前端本地运行</h3>
+          <p>所有换算都在你的浏览器里完成，不经过服务器、不存储任何输入内容，转换公司内网地址或敏感数据也放心。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="section-head">
+        <span class="kicker">FAQ</span>
+        <h2>进制转换常见问题</h2>
+      </div>
+      <details class="faq-item">
+        <summary>二进制、八进制、十进制、十六进制之间怎么快速互转？</summary>
+        <p class="faq-a">最省事的路径是借道十进制：先按位权展开算出十进制值，再用除基取余得到目标进制。二进制与八进制、十六进制之间有更快的分组法——每 3 位对应一位八进制、每 4 位对应一位十六进制。当然，直接用本页顶部的转换器，输入任意一栏即可实时拿到全部四种结果。</p>
+      </details>
+      <details class="faq-item">
+        <summary>为什么计算机使用二进制而不是十进制？</summary>
+        <p class="faq-a">计算机的底层元件（晶体管）只有「导通」和「截止」两种稳定状态，天然对应 0 和 1。二进制下电路只需区分高低电平，抗干扰能力强、制造成本低；而且二进制的与、或、非运算可以直接用门电路实现，加法器等运算单元的设计因此非常简洁。</p>
+      </details>
+      <details class="faq-item">
+        <summary>十六进制里的 A、B、C、D、E、F 分别代表多少？</summary>
+        <p class="faq-a">分别代表十进制的 10 到 15。因为十六进制需要 16 个符号，而 0-9 只有十个数字，于是约定用前六个英文字母补齐：A=10、B=11、C=12、D=13、E=14、F=15。字母大小写等价，0xFF 与 0xff 是同一个数。</p>
+      </details>
+      <details class="faq-item">
+        <summary>代码里看到的 0x、0b、0o 前缀是什么意思？</summary>
+        <p class="faq-a">它们是编程语言中标注进制的约定前缀：0x 表示十六进制（如 0x1A）、0b 表示二进制（如 0b1010）、0o 表示八进制（如 0o17）。C、Java、Python、JavaScript 等主流语言均遵循这一写法。本站转换器会自动忽略这些前缀，直接粘贴即可。</p>
+      </details>
+      <details class="faq-item">
+        <summary>负数和小数能转换吗？</summary>
+        <p class="faq-a">本工具目前面向非负整数。负数转换时通常先取绝对值换算，再按补码规则处理符号位，涉及位数宽度（8 位、16 位、32 位），不同语言表现不同；小数部分则用「乘基取整」逐位求出，多数十进制小数在二进制下是无限循环小数。两种情况我们都在<a href="guide.html">转换百科</a>里给出了详细步骤。</p>
+      </details>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+      <div class="cta-band">
+        <h2>现在就开始换算</h2>
+        <p>不用注册、不用下载，回到页面顶部输入数字，四种进制结果同时呈现。</p>
+        <a class="button--primary" href="#syncConverter">立即使用转换器</a>
+        <a class="button--ghost" href="guide.html" style="margin-left:12px;">先学换算方法</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="nav-brand" href="index.html"><svg class="brand-logo" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="12" fill="#0a0231" stroke="#41f7d3" stroke-width="2.5"/><text x="6" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#41f7d3">01</text><path d="M23 25h8m-4-4l4 4-4 4" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="33" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#fcf11a">F</text></svg>进制转换器<span class="dot">.</span></a>
+          <p>专注进制换算的免费在线工具站：二进制、八进制、十进制、十六进制任意互转，配套原创教程与速查表，帮助程序员与学生高效处理数字进制问题。</p>
+        </div>
+        <div class="footer-col">
+          <h4>转换工具</h4>
+          <a href="binary.html">二进制转换器</a>
+          <a href="octal.html">八进制转换器</a>
+          <a href="decimal.html">十进制转换器</a>
+          <a href="hex.html">十六进制转换器</a>
+        </div>
+        <div class="footer-col">
+          <h4>学习资料</h4>
+          <a href="guide.html">进制转换百科</a>
+          <a href="index.html#table">进制对照速查表</a>
+          <a href="index.html#faq">常见问题解答</a>
+        </div>
+        <div class="footer-col">
+          <h4>快捷入口</h4>
+          <a href="index.html#syncConverter">综合转换器</a>
+          <a href="decimal.html">十进制转二进制</a>
+          <a href="hex.html">十六进制转十进制</a>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 进制转换器 · 本站所有换算均在浏览器本地完成，不收集任何输入数据</div>
+    </div>
+  </footer>
+
+</div>
+<script src="js/converter.js"></script>
+<script src="js/baidu-analytics.js"></script>
+</body>
+</html>

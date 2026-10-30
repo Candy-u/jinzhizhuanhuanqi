@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>十六进制转换器_十六进制与二进制、十进制在线互转 - 进制转换器</title>
+<meta name="description" content="十六进制在线转换工具：十六进制转十进制、十六进制转二进制一键完成，自动识别 0x 前缀，大数不丢精度。附 A-F 含义、颜色码与内存地址实例、0-15 对照表。">
+<link rel="canonical" href="https://www.jinzhizhuanhuan.com/hex.html">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "十六进制 FF 等于十进制多少？",
+      "acceptedAnswer": { "@type": "Answer", "text": "FF = 15×16 + 15 = 255。F 代表 15，十六进制从右往左位权依次是 1、16、256。" }
+    },
+    {
+      "@type": "Question",
+      "name": "网页颜色 #FF5500 里的数字是什么意思？",
+      "acceptedAnswer": { "@type": "Answer", "text": "#RRGGBB 格式中每两位十六进制表示一个颜色通道：FF=255（红）、55=85（绿）、00=0（蓝），即由 255 份红、85 份绿混合而成的橙色。" }
+    },
+    {
+      "@type": "Question",
+      "name": "十六进制为什么用字母 A 到 F？",
+      "acceptedAnswer": { "@type": "Answer", "text": "十六进制需要 16 个符号，而 0-9 只有十个数字，因此约定用 A、B、C、D、E、F 分别表示 10 到 15，大小写等价。" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.jinzhizhuanhuan.com/" },
+    { "@type": "ListItem", "position": 2, "name": "十六进制转换", "item": "https://www.jinzhizhuanhuan.com/hex.html" }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="page">
+
+  <header class="nav-bar">
+    <a class="nav-brand" href="index.html"><svg class="brand-logo" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="12" fill="#0a0231" stroke="#41f7d3" stroke-width="2.5"/><text x="6" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#41f7d3">01</text><path d="M23 25h8m-4-4l4 4-4 4" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="33" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#fcf11a">F</text></svg>进制转换器<span class="dot">.</span></a>
+    <nav class="nav-links" aria-label="站内导航">
+      <a class="nav-link" href="index.html">首页</a>
+      <a class="nav-link" href="binary.html">二进制转换</a>
+      <a class="nav-link" href="octal.html">八进制转换</a>
+      <a class="nav-link" href="decimal.html">十进制转换</a>
+      <a class="nav-link active" href="hex.html" aria-current="page">十六进制转换</a>
+      <a class="nav-link" href="guide.html">转换百科</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="index.html">首页</a><span class="sep">/</span>十六进制转换
+    </nav>
+
+    <section class="hero">
+      <span class="eyebrow">HEX · 满十六进一</span>
+      <h1>十六进制在线转换器，<em>与十进制、二进制</em>实时互转</h1>
+      <p class="hero-desc">自动识别 0x 前缀和大小写，输入十六进制数即刻得到十进制、二进制、八进制结果；支持超长地址逐位换算，精度零丢失。</p>
+    </section>
+
+    <section class="tool-section" aria-label="十六进制转换工具">
+      <div class="tool-card" id="hexTool" data-convert-tool>
+        <h2>十六进制 ↔ 其他进制换算器</h2>
+        <p class="tool-tip">默认预选「十六进制 → 十进制」；0x 前缀可写可不写，A-F 不区分大小写。</p>
+        <div class="convert-row">
+          <div class="convert-col">
+            <label for="fromBase">源进制</label>
+            <select id="fromBase" name="from-base">
+              <option value="2">二进制（0-1）</option>
+              <option value="8">八进制（0-7）</option>
+              <option value="10">十进制（0-9）</option>
+              <option value="16" selected>十六进制（0-9 / A-F）</option>
+            </select>
+          </div>
+          <div class="convert-col">
+            <button type="button" class="swap-btn" title="交换源进制与目标进制" aria-label="交换进制方向">⇄</button>
+          </div>
+          <div class="convert-col">
+            <label for="toBase">目标进制</label>
+            <select id="toBase" name="to-base">
+              <option value="2">二进制（0-1）</option>
+              <option value="8">八进制（0-7）</option>
+              <option value="10" selected>十进制（0-9）</option>
+              <option value="16">十六进制（0-9 / A-F）</option>
+            </select>
+          </div>
+        </div>
+        <div class="convert-row" style="grid-template-columns: 1fr;">
+          <div class="convert-col">
+            <label for="hexInput">输入数值</label>
+            <input id="hexInput" name="source" placeholder="例如：0x6B 或 FF" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+        <div class="result-box">
+          <output name="result" for="hexInput" aria-live="polite">转换结果会显示在这里</output>
+          <button type="button" class="copy-btn">复制结果</button>
+        </div>
+        <p class="tool-msg" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">HEXADECIMAL 101</span>
+        <h2>十六进制是什么：程序员的「二进制压缩包」</h2>
+      </div>
+      <div class="prose-card">
+        <h3>十六个符号与 A-F 的来历</h3>
+        <p>十六进制（Hexadecimal，常缩写为 Hex）以 16 为基数，用 0-9 加 A、B、C、D、E、F 共十六个符号表示数值，其中 A=10、B=11、C=12、D=13、E=14、F=15，字母大小写等价。书写时常加 0x 前缀避免歧义，例如 0x2F；网页色值则用 # 号开头，两者指向的是同一套计数规则。</p>
+        <p>位权展开法在十六进制下同样适用，位权从右往左依次是 1、16、256、4096……例如把 0x2F 换成十进制：</p>
+        <div class="demo-steps">
+          <p>0x2F = 2×16 + 15×1</p>
+          <p class="final">= 32 + 15 = 47（十进制）</p>
+        </div>
+        <p>十进制转十六进制用「除 16 取余、余数倒排」，余数 10-15 记作 A-F。以 47 为例：47 ÷ 16 = 2 余 15（F），2 ÷ 16 = 0 余 2，倒排得 2F。</p>
+        <h3>与二进制的关系：1 位拆 4 位</h3>
+        <p>十六进制真正的威力在于它是二进制的「压缩写法」：2⁴ = 16，一个十六进制字符恰好对应 4 个二进制位。展开和压缩都不需要任何乘除运算，查表即可：</p>
+        <div class="demo-steps">
+          <p>0x6B → 6 = 0110，B = 1011</p>
+          <p class="final">二进制为 01101011，即十进制 107</p>
+        </div>
+        <p>正因为这种一一对应，调试器、十六进制编辑器、抓包工具里的数据都用十六进制展示：32 位地址只写 8 个字符，比 32 个 0 和 1 短得多，又随时能还原出每一个比特。</p>
+        <h3>实例一：看懂网页颜色 #FF5500</h3>
+        <p>CSS 颜色采用 #RRGGBB 格式，RR、GG、BB 各用两位十六进制表示红、绿、蓝三个通道的强度（0-255）。FF5500 拆开看：FF = 255（红拉满）、55 = 85（绿中等）、00 = 0（蓝全无），合成一个偏橙的红色。想手动微调颜色深浅，把十六进制换算成十进制再改，比凭感觉猜快得多。</p>
+        <h3>实例二：内存地址与哈希值</h3>
+        <p>报错信息里的 <code>0x7ffd8a3c21f4</code> 这类地址、git 提交号、MD5 校验值都是十六进制串。以 64 位地址为例，16 个十六进制字符对应 64 个比特；调试时经常需要把它换回十进制比较大小，或者按 4 位分组检查特定比特位——本页转换器都支持，地址再长也不会因为超出数值范围而算错。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="kicker">CHEAT SHEET</span>
+        <h2>十六进制 0 - F 逐位对照表</h2>
+        <p>记熟这 16 行，十六进制与二进制之间就能直接心算，不再依赖工具。</p>
+      </div>
+      <div class="prose-card">
+        <div class="table-wrap">
+          <table class="base-table">
+            <thead>
+              <tr><th>十六进制</th><th>二进制</th><th>八进制</th><th>十进制</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>0</td><td>0000</td><td>0</td><td class="dec">0</td></tr>
+              <tr><td>1</td><td>0001</td><td>1</td><td class="dec">1</td></tr>
+              <tr><td>2</td><td>0010</td><td>2</td><td class="dec">2</td></tr>
+              <tr><td>3</td><td>0011</td><td>3</td><td class="dec">3</td></tr>
+              <tr><td>4</td><td>0100</td><td>4</td><td class="dec">4</td></tr>
+              <tr><td>5</td><td>0101</td><td>5</td><td class="dec">5</td></tr>
+              <tr><td>6</td><td>0110</td><td>6</td><td class="dec">6</td></tr>
+              <tr><td>7</td><td>0111</td><td>7</td><td class="dec">7</td></tr>
+              <tr><td>8</td><td>1000</td><td>10</td><td class="dec">8</td></tr>
+              <tr><td>9</td><td>1001</td><td>11</td><td class="dec">9</td></tr>
+              <tr><td>A</td><td>1010</td><td>12</td><td class="dec">10</td></tr>
+              <tr><td>B</td><td>1011</td><td>13</td><td class="dec">11</td></tr>
+              <tr><td>C</td><td>1100</td><td>14</td><td class="dec">12</td></tr>
+              <tr><td>D</td><td>1101</td><td>15</td><td class="dec">13</td></tr>
+              <tr><td>E</td><td>1110</td><td>16</td><td class="dec">14</td></tr>
+              <tr><td>F</td><td>1111</td><td>17</td><td class="dec">15</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-head">
+        <span class="kicker">FAQ</span>
+        <h2>十六进制转换常见问题</h2>
+      </div>
+      <details class="faq-item">
+        <summary>十六进制 FF 等于十进制多少？</summary>
+        <p class="faq-a">FF = 15×16 + 15 = 255。顺带记住一组常用值：F=15、FF=255、FFF=4095、FFFF=65535，它们分别对应二进制 4、8、12、16 个 1，看颜色值和地址范围时非常常用。</p>
+      </details>
+      <details class="faq-item">
+        <summary>网页颜色 #FF5500 里的数字是什么意思？</summary>
+        <p class="faq-a">这是 #RRGGBB 格式：每两位十六进制代表一个颜色通道的强度（十进制 0-255）。FF=255 表示红色通道拉满，55=85 表示绿色中等，00=0 表示蓝色为 0，混合后是橙红色。三个通道都写 FF（#FFFFFF）就是白色，全写 00 就是黑色。</p>
+      </details>
+      <details class="faq-item">
+        <summary>十六进制为什么用字母 A 到 F？</summary>
+        <p class="faq-a">因为它需要 16 个不同符号，0-9 只有十个数字，于是约定用前六个字母补足：A=10、B=11、C=12、D=13、E=14、F=15。字母只是符号，不代表「比 9 更大的未知数」，大小写完全等价，0xFF 和 0xff 是同一个数。</p>
+      </details>
+      <details class="faq-item">
+        <summary>0x 前缀必须写吗？</summary>
+        <p class="faq-a">取决于场景：代码里通常必须写（否则 1A 会被当成标识符或非法数字），日常口算和记录时可以省略。本站转换器两种写法都接受，粘贴 0x6B 或 6B 均可正确换算。</p>
+      </details>
+      <details class="faq-item">
+        <summary>为什么内存地址都用十六进制显示？</summary>
+        <p class="faq-a">因为十六进制与二进制每 4 位一一对应，显示紧凑又能随时还原每个比特。一个 64 位地址写成 16 个字符，而二进制要写 64 个字符；同时十六进制的每一位都是独立的 4 比特组，便于对齐字节（2 个十六进制字符 = 1 字节）检查数据。</p>
+      </details>
+    </section>
+
+    <section class="section">
+      <div class="cta-band">
+        <h2>继续换算其他进制</h2>
+        <p>十六进制换算完成后，二进制与十进制的专属转换页同样好用。</p>
+        <a class="button--primary" href="binary.html">去二进制转换</a>
+        <a class="button--ghost" href="decimal.html" style="margin-left:12px;">去十进制转换</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="nav-brand" href="index.html"><svg class="brand-logo" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><rect x="2" y="2" width="44" height="44" rx="12" fill="#0a0231" stroke="#41f7d3" stroke-width="2.5"/><text x="6" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#41f7d3">01</text><path d="M23 25h8m-4-4l4 4-4 4" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="33" y="29" font-family="Consolas,monospace" font-size="12" font-weight="700" fill="#fcf11a">F</text></svg>进制转换器<span class="dot">.</span></a>
+          <p>专注进制换算的免费在线工具站：二进制、八进制、十进制、十六进制任意互转，配套原创教程与速查表，帮助程序员与学生高效处理数字进制问题。</p>
+        </div>
+        <div class="footer-col">
+          <h4>转换工具</h4>
+          <a href="binary.html">二进制转换器</a>
+          <a href="octal.html">八进制转换器</a>
+          <a href="decimal.html">十进制转换器</a>
+          <a href="hex.html">十六进制转换器</a>
+        </div>
+        <div class="footer-col">
+          <h4>学习资料</h4>
+          <a href="guide.html">进制转换百科</a>
+          <a href="index.html#table">进制对照速查表</a>
+          <a href="index.html#faq">常见问题解答</a>
+        </div>
+        <div class="footer-col">
+          <h4>快捷入口</h4>
+          <a href="index.html#syncConverter">综合转换器</a>
+          <a href="decimal.html">十进制转二进制</a>
+          <a href="hex.html">十六进制转十进制</a>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 进制转换器 · 本站所有换算均在浏览器本地完成，不收集任何输入数据</div>
+    </div>
+  </footer>
+
+</div>
+<script src="js/converter.js"></script>
+<script src="js/baidu-analytics.js"></script>
+</body>
+</html>
