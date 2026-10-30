@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow:
 
-Sitemap: https://www.jinzhizhuanhuan.com/sitemap.xml
+Sitemap: https://jinzhizhuanhuan.com/sitemap.xml
